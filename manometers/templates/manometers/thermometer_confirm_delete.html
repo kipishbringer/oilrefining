@@ -1,0 +1,11 @@
+{% extends 'base.html'%}
+{% block content %}
+<div>
+    <form method="post">
+        {% csrf_token %}
+        <p>Вы действительно хотите удалить термометр {{ thermometer.serial_number }}?</p>
+        <button type="submit" class="button">Удалить</button>
+        <a class="menu" href="{% url 'manometers:manometer-list' %}" role="button">Отменить</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'base.html'%}
+{% block content %}
+<div class="center">
+
+    {% if manometers %}
+    <h2>Манометры</h2>
+    <a class="block" href="{% url 'manometers:manometer-create' %}" role="button">Добавить</a>
+    <div class="list">
+        {% for manometer in manometers|dictsort:'pk' %}
+        <div class="info">
+            {% if manometer.position %}
+                <p class="block">{{ manometer.position }}</p>
+            {% else %}
+                <p class="block">-</p>
+            {% endif %}
+            <p class="block">{{ manometer.next_verification_date }}</p>
+            <p class="block">{{ manometer.serial_number }}</p>
+            <p class="block">{{ manometer.scale }}</p>
+            <p class="block">{{ manometer.unit }}</p>
+            {% if manometer.notes %}
+                <p class="block">{{ manometer.notes }}</p>
+            {% else %}
+                <p class="block">-</p>
+            {% endif %}
+            {% if manometer.is_working %}
+            <p class="block">Исправный</p>
+            {% else %}
+            <p class="block">Брак</p>
+            {% endif %}
+            <p class="block">{{ manometer.author }}</p>
+            <a class="block" href="{% url 'manometers:manometer-update' manometer.pk %}" role="button">Редактировать</a>
+            <a class="block" href="{% url 'manometers:manometer-delete' manometer.pk %}" role="button">Удалить</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <h2>Манометры отсутствуют</h2>
+    <a class="block" href="{% url 'manometers:manometer-create' %}" role="button">Добавить</a>
+    {% endif %}
+
+    {% if thermometers %}
+    <h2>Термометры</h2>
+    <a class="block" href="{% url 'manometers:thermometer-create' %}" role="button">Добавить</a>
+    <div class="list">
+
+        {% for thermometer in thermometers|dictsort:'pk' %}
+        <div class="info">
+            <p class="block">{{ thermometer.position }}</p>
+            <p class="block">{{ thermometer.next_verification_date }}</p>
+            <p class="block">{{ thermometer.serial_number }}</p>
+            <p class="block">{{ thermometer.scale }}</p>
+            <p class="block">{{ thermometer.unit }}</p>
+            {% if thermometer.notes %}
+                <p class="block">{{ thermometer.notes }}</p>
+            {% else %}
+                <p class="block">-</p>
+            {% endif %}
+            {% if thermometer.is_working %}
+            <p class="block">Исправный</p>
+            {% else %}
+            <p class="block">Брак</p>
+            {% endif %}
+            <p class="block">{{ thermometer.author }}</p>
+            <a class="block" href="{% url 'manometers:thermometer-update' thermometer.pk %}" role="button">Редактировать</a>
+            <a class="block" href="{% url 'manometers:thermometer-delete' thermometer.pk %}" role="button">Удалить</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <h2>Термометры отсутствуют</h2>
+    <a class="block" href="{% url 'manometers:thermometer-create' %}" role="button">Добавить</a>
+    {% endif %}
+    <a class="block" href="{% url 'manometers:position-list' %}" role="button">Позиции</a>
+</div>
+
+{% endblock %}

@@ -14,9 +14,28 @@ class ManometerForm(forms.ModelForm):
         fields = ('id', 'position', 'next_verification_date', 'serial_number',
                   'scale', 'unit', 'notes', 'is_working')
 
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+
+        if user:
+            self.fields['position'].queryset = Position.objects.filter(author=user)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        position = cleaned_data.get('position')
+        if  position and position.author != self.instance.author:
+            raise forms.ValidationError("Вы выбрали позицию другой организации.")
 
 class ThermometerForm(forms.ModelForm):
     class Meta:
         model = Thermometer
         fields = ('id', 'position', 'next_verification_date', 'serial_number',
                   'scale', 'unit', 'notes', 'is_working')
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+
+        if user:
+            self.fields['position'].queryset = Position.objects.filter(author=user)

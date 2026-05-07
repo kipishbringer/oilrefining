@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>oil refinery</title>
+    <link rel="icon" type="image/x-icon" href="/media/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+<header>
+    <div class="top center">
+        <h1 class="title">oil_refinery</h1>
+        <nav class="menu">
+            <a href="{% url 'main:main' %}">На главную</a>
+            <a href="{% url 'manometers:manometer-list' %}">Манометры / Термометры</a>
+
+            <div>
+                {% if user.name %}
+                <p>{{ user.name }}</p>
+                <form action="/users/logout/" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="link-button">Выйти</button>
+                </form>
+                {% else %}
+                <a href="{% url 'users:login' %}">Войти</a>
+                {% endif %}
+            </div>
+
+        </nav>
+    </div>
+</header>
+<main>
+    <section class="content">
+
+
+        {% block content %}
+        {% endblock %}
+    </section>
+</main>
+
+<footer class="footer center">
+
+    <div class="footer__content">
+        <section class="footer__info">
+            <div class="footer__item">
+                <h4 class="contacts">Контакты</h4>
+                <a class="menu__link" href="">+7 996 545 49 09</a>
+                <a class="menu__link" href="">kipishbringer@gmail.com</a>
+                <div class="footer__icons">
+                    <img class="tg_logo" src="/media/tg.svg" alt="Телеграм">
+                </div>
+            </div>
+        </section>
+    </div>
+</footer>
+</body>
+
+</html>

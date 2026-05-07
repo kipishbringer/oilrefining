@@ -1,3 +1,6 @@
 from django.shortcuts import render
+from config.settings import BASE_DIR
 
-# Create your views here.
+
+def main(request):
+    return render(request, f"{BASE_DIR}/main/templates/main.html")

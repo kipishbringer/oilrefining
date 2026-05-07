@@ -29,7 +29,7 @@ class Position(models.Model):
 
 class Manometer(models.Model):
 
-    position = models.ForeignKey('Position', on_delete=models.SET_NULL, to_field='name',
+    position = models.OneToOneField('Position', on_delete=models.SET_NULL, to_field='name', unique=True,
                                  related_name='manometers', verbose_name='позиция', **NULLABLE)
     next_verification_date = models.DateField(verbose_name='дата следующей поверки')
     serial_number = models.CharField(max_length=50, unique=True, verbose_name='серийный номер')
@@ -50,7 +50,7 @@ class Manometer(models.Model):
 
 class Thermometer(models.Model):
 
-    position = models.ForeignKey('Position', on_delete=models.SET_NULL, to_field='name',
+    position = models.OneToOneField('Position', on_delete=models.SET_NULL, to_field='name', unique=True,
                                  related_name='thermometers', verbose_name='позиция', **NULLABLE)
     next_verification_date = models.DateField(verbose_name='дата следующей поверки')
     serial_number = models.CharField(max_length=50, unique=True, verbose_name='серийный номер')

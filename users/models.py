@@ -7,6 +7,8 @@ NULLABLE = {'blank': True, 'null': True}
 
 class User(AbstractUser):
 
+    username = None
+
     name = models.CharField(max_length=255, unique=True, verbose_name='название подразделения')
 
     USERNAME_FIELD = 'name'

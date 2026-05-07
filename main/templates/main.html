@@ -1,8 +1,16 @@
 {% extends 'base.html'%}
 {% block content %}
-
-<div class="main center">
-    <t>Hi Bla bla bla</t>
-</div>
+<h2>{{ greeting }}</h2>
+{% if weather.cod == 200 %}
+    <div class="weather">
+        <p>{{ weather.name }}</p>
+        <p>Температура: {{ weather.main.temp }} °C</p>
+        <p>Ощущается как: {{ weather.main.feels_like }} °C</p>
+        <p>Влажность: {{ weather.main.humidity }}%</p>
+        <p>Скорость ветра: {{ weather.wind.speed }} м/с</p>
+        <p>Направление ветра: {{ weather.wind.deg }} °</p>
+        <p>Описание: {{ weather.weather.0.description }}</p>
+    </div>
+{% endif %}
 
 {% endblock %}

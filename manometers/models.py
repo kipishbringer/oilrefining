@@ -1,5 +1,6 @@
 from django.db import models
 
+from users.models import User
 
 NULLABLE = {'blank': True, 'null': True}
 
@@ -15,6 +16,8 @@ class Position(models.Model):
 
     name = models.CharField(max_length=255, unique=True, verbose_name='название')
     group = models.CharField(max_length=20, choices=Group.choices, default=Group.GENERAL, verbose_name='группа')
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                               related_name='positions', verbose_name='подразделение')
 
     def __str__(self):
         return self.name
@@ -34,6 +37,8 @@ class Manometer(models.Model):
     unit = models.CharField(max_length=25, verbose_name='единица измерения')
     notes = models.TextField(verbose_name='примечания', **NULLABLE)
     is_working = models.BooleanField(default=True, verbose_name='статус исправности')
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                               related_name='manometers', verbose_name='подразделение')
 
     def __str__(self):
         return f'манометр {self.serial_number}'
@@ -53,6 +58,8 @@ class Thermometer(models.Model):
     unit = models.CharField(max_length=25, default='°C', verbose_name='единица измерения')
     notes = models.TextField(verbose_name='примечания', **NULLABLE)
     is_working = models.BooleanField(default=True, verbose_name='статус исправности')
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                               related_name='thermometers', verbose_name='подразделение')
 
     def __str__(self):
         return f'термометр {self.serial_number}'

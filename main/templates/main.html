@@ -2,15 +2,129 @@
 {% block content %}
 <h2>{{ greeting }}</h2>
 {% if weather.cod == 200 %}
-    <div class="weather">
-        <p>{{ weather.name }}</p>
-        <p>Температура: {{ weather.main.temp }} °C</p>
-        <p>Ощущается как: {{ weather.main.feels_like }} °C</p>
-        <p>Влажность: {{ weather.main.humidity }}%</p>
-        <p>Скорость ветра: {{ weather.wind.speed }} м/с</p>
-        <p>Направление ветра: {{ weather.wind.deg }} °</p>
-        <p>Описание: {{ weather.weather.0.description }}</p>
+<div class="weather">
+    <p>{{ weather.name }}</p>
+    <p>Температура: {{ weather.main.temp }} °C</p>
+    <p>Ощущается как: {{ weather.main.feels_like }} °C</p>
+    <p>Влажность: {{ weather.main.humidity }}%</p>
+    <p>Скорость ветра: {{ weather.wind.speed }} м/с</p>
+    <p>Направление ветра: {{ weather.wind.deg }} °</p>
+    <p>Описание: {{ weather.weather.0.description }}</p>
+</div>
+<div>
+        <h2>Валюта</h2>
+        <ul style="">
+            <li>USD - {{ currency.USD }} руб.</li>
+            <li>EUR - {{ currency.EUR }} руб.</li>
+            <li>Brent - {{ currency.Brent }} $ за баррель</li>
+            <li>Золото - {{currency.Gold }} руб/г</li>
+        </ul>
     </div>
+
+
+<div class="radio-widget">
+    <select class="radio-select" id="stationSelect">
+
+        <option value="https://radiorecord.hostingradio.ru/rr_main96.aacp">
+            Record Main
+        </option>
+
+        <option value="https://radiorecord.hostingradio.ru/deep96.aacp">
+            Record Deep
+        </option>
+
+        <option value="https://radiorecord.hostingradio.ru/lofi96.aacp">
+            Record Lo-Fi
+        </option>
+
+        <option value="https://radiorecord.hostingradio.ru/chil96.aacp">
+            Record Chill-Out
+        </option>
+
+        <option value="http://nashe1.hostingradio.ru/jazz-128.mp3">
+            Jazz FM
+        </option>
+
+        <option value="http://air.volna.top/HypeFM">
+            Хайп FM
+        </option>
+
+        <option value="http://hls-01-retro.emgsound.ru/12/128/playlist.m3u8">
+            Retro FM
+        </option>
+
+        <option value="https://radiorecord.hostingradio.ru/rock96.aacp">
+            Rock FM
+        </option>
+
+        <option value="https://radiorecord.hostingradio.ru/200096.aacp">
+            Record 00-х
+        </option>
+
+        <option value="https://radiorecord.hostingradio.ru/198096.aacp">
+            Record 80-х
+        </option>
+
+        <option value="https://radiorecord.hostingradio.ru/rapclassics96.aacp">
+            Record Rap Classics
+        </option>
+
+        <option value="https://radiorecord.hostingradio.ru/armin96.aacp">
+            Record «Armin van Buuren»
+        </option>
+
+        <option value="https://radiorecord.hostingradio.ru/discofunk96.aacp">
+            Record Disco/Funk
+        </option>
+
+        <option value="https://radiorecord.hostingradio.ru/discofunk96.aacp">
+            Record «Christmas Chill»
+        </option>
+
+    </select>
+    <audio
+            id="audio"
+            controls
+            autoplay
+    ></audio>
+</div>
+
+
+<script>
+
+    const audio = document.getElementById('audio');
+    const stationSelect = document.getElementById('stationSelect');
+    const stationName = document.getElementById('stationName');
+
+    function setStation(name, url){
+
+        audio.src = url;
+        audio.play();
+
+        stationName.textContent = name;
+
+        stationSelect.value = url;
+    }
+
+    stationSelect.addEventListener('change', () => {
+
+        const url = stationSelect.value;
+
+        const text =
+            stationSelect.options[
+                stationSelect.selectedIndex
+            ].text;
+
+        setStation(text, url);
+    });
+
+    setStation(
+        'Record Main',
+        'https://radiorecord.hostingradio.ru/rr_main96.aacp'
+    );
+
+</script>
+
 {% endif %}
 
 {% endblock %}

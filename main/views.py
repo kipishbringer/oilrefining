@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from config.settings import BASE_DIR
+from main.currency import get_currency
 from main.weather import get_weather
 from django.utils import timezone
 
@@ -19,5 +20,6 @@ def get_greeting():
 def main(request):
     weather = get_weather()
     greeting = get_greeting()
+    currency = get_currency()
 
-    return render(request, f"{BASE_DIR}/main/templates/main.html", {"weather": weather, 'greeting': greeting})
+    return render(request, f"{BASE_DIR}/main/templates/main.html", {"weather": weather, 'greeting': greeting, 'currency': currency})

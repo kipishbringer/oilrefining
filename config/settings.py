@@ -47,9 +47,11 @@ INSTALLED_APPS = [
 
     'django_dump_load_utf8',
 
+    'rest_framework',
+
     'users',
     'main',
-    'manometers',
+    'measurement',
 ]
 
 MIDDLEWARE = [

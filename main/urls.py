@@ -6,6 +6,4 @@ from django.contrib.auth.views import LoginView, LogoutView
 
 app_name = MainConfig.name
 
-urlpatterns = [
-    path('', cache_page(0)(views.main), name='main'),
-]
+urlpatterns = []

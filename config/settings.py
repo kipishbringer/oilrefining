@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 import os
+from datetime import timedelta
 from pathlib import Path
 from dotenv.main import load_dotenv
 
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
     'django_dump_load_utf8',
 
     'rest_framework',
+    'rest_framework_simplejwt',
 
     'users',
     'main',
@@ -171,3 +173,20 @@ if CACHE_ENABLED:
             "LOCATION": os.getenv('CACHE_LOCATION', 'redis://localhost:6379/2'),
         }
     }
+
+
+"""REST API"""
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=12),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=2),
+}

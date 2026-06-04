@@ -1,31 +1,32 @@
-import requests
 from django.conf import settings
+import requests
 
 
 def get_currency():
+    exchangerate_api_key = settings.EXCHANGERATE_API_KEY
+    oilprice_api_key = settings.OILPRICE_API_KEY
+    url_usd = f'https://v6.exchangerate-api.com/v6/{exchangerate_api_key}/latest/USD'
+    url_eur = f'https://v6.exchangerate-api.com/v6/{exchangerate_api_key}/latest/EUR'
+    response_usd = requests.get(url=url_usd, timeout=10)
+    response_eur = requests.get(url=url_eur, timeout=10)
+    response_usd.raise_for_status()
+    response_eur.raise_for_status()
 
-    EXCHANGERATE_API_KEY = settings.EXCHANGERATE_API_KEY
-    URL_USD = f'https://v6.exchangerate-api.com/v6/{EXCHANGERATE_API_KEY}/latest/USD'
-    URL_EUR = f'https://v6.exchangerate-api.com/v6/{EXCHANGERATE_API_KEY}/latest/EUR'
-    response_USD = requests.get(url=URL_USD)
-    response_EUR = requests.get(url=URL_EUR)
-    USD = response_USD.json()['conversion_rates']['RUB']
-    EUR = response_EUR.json()['conversion_rates']['RUB']
-
-    OILPRICE_API_KEY = settings.OILPRICE_API_KEY
-    URL_OILPRICE = "https://api.oilpriceapi.com/v1/prices/latest"
+    usd = response_usd.json()['conversion_rates']['RUB']
+    eur = response_eur.json()['conversion_rates']['RUB']
 
     headers = {
-        "Authorization": f"Token {OILPRICE_API_KEY}"
+        "Authorization": f"Token {oilprice_api_key}"
     }
 
-    response_OIL = requests.get(URL_OILPRICE, headers=headers)
-    OIL = response_OIL.json()
+    oilprice_url = "https://api.oilpriceapi.com/v1/prices/latest"
+    response_oil = requests.get(oilprice_url, headers=headers, timeout=10)
+    response_gold_usd = requests.get(oilprice_url, headers=headers, params={"code": "GOLD_USD", "unit": "g"}, timeout=10)
+    response_oil.raise_for_status()
+    response_gold_usd.raise_for_status()
 
-    response_GOLD_USD =  requests.get(URL_OILPRICE, headers=headers, params={"code": "GOLD_USD", "unit": "g"})
-    GOLD_USD = response_GOLD_USD.json()
-    GOLD = float(GOLD_USD['data']['price']) / 31.1035 * USD
+    oil = response_oil.json()
+    gold_usd = response_gold_usd.json()
+    gold = float(gold_usd['data']['price']) * usd
 
-    result = {'USD': USD, 'EUR': EUR, 'Brent': OIL['data']['price'], 'Gold': round(GOLD)}
-
-    return result
+    return {'USD': usd, 'EUR': eur, 'Brent': oil['data']['price'], 'Gold': round(gold)}

@@ -14,15 +14,15 @@ from datetime import timedelta
 from pathlib import Path
 from dotenv.main import load_dotenv
 
-"""API"""
-OPENWEATHER_API_KEY = os.getenv('OPENWEATHER_API_KEY')
-EXCHANGERATE_API_KEY = os.getenv('EXCHANGERATE_API_KEY')
-OILPRICE_API_KEY = os.getenv('OILPRICE_API_KEY')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv(BASE_DIR / '.env')
 
+"""API"""
+OPENWEATHER_API_KEY = os.getenv('OPENWEATHER_API_KEY')
+EXCHANGERATE_API_KEY = os.getenv('EXCHANGERATE_API_KEY')
+OILPRICE_API_KEY = os.getenv('OILPRICE_API_KEY')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
@@ -165,13 +165,20 @@ CSRF_TRUSTED_ORIGINS = [
 
 CORS_ALLOW_ALL_ORIGINS = False
 
-CACHE_ENABLED = os.getenv('CACHE_ENABLED', False)
+CACHE_ENABLED = os.getenv('CACHE_ENABLED', 'False').lower() in ('true', '1', 'yes', 'on')
 
 if CACHE_ENABLED:
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
             "LOCATION": os.getenv('CACHE_LOCATION', 'redis://localhost:6379/2'),
+        }
+    }
+else:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+            "LOCATION": "oilrefining-dev-cache",
         }
     }
 

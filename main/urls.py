@@ -7,4 +7,5 @@ app_name = MainConfig.name
 urlpatterns = [
     path('api/weather/', views.WeatherAPIView.as_view(), name='weather'),
     path('api/markets/', views.MarketsAPIView.as_view(), name='markets'),
+    path('api/news/', views.NewsAPIView.as_view(), name='news'),
 ]

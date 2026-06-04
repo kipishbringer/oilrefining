@@ -23,6 +23,7 @@ load_dotenv(BASE_DIR / '.env')
 OPENWEATHER_API_KEY = os.getenv('OPENWEATHER_API_KEY')
 EXCHANGERATE_API_KEY = os.getenv('EXCHANGERATE_API_KEY')
 OILPRICE_API_KEY = os.getenv('OILPRICE_API_KEY')
+NEWS_RSS_URLS = os.getenv('NEWS_RSS_URLS', '')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/

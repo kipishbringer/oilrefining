@@ -1,5 +1,5 @@
 from rest_framework import generics
-from measurement.mixins import AuthorQuerySetMixin
+from measurement.mixins import AuthorQuerySetMixin, CachedListAPIViewMixin, CacheInvalidationMixin
 from measurement.permissions import IsOwner
 from measurement.models import Position, Manometer, Thermometer, Subdivision, Brigade, Territory, \
     BrigadeTerritoryAssignment
@@ -8,14 +8,16 @@ from measurement.serializers import SubdivisionSerializer, BrigadeSerializer, Te
 
 
 """CRUD Subdivision"""
-class SubdivisionListAPIView(generics.ListAPIView, AuthorQuerySetMixin):
+class SubdivisionListAPIView(CachedListAPIViewMixin, AuthorQuerySetMixin, generics.ListAPIView):
     serializer_class = SubdivisionSerializer
     queryset = Subdivision.objects.all()
+    cache_namespace = 'subdivision'
 
 
-class SubdivisionCreateAPIView(generics.CreateAPIView):
+class SubdivisionCreateAPIView(CacheInvalidationMixin, generics.CreateAPIView):
     serializer_class = SubdivisionSerializer
     queryset = Subdivision.objects.all()
+    cache_namespace = 'subdivision'
 
 
 class SubdivisionRetrieveAPIView(generics.RetrieveAPIView):
@@ -24,27 +26,31 @@ class SubdivisionRetrieveAPIView(generics.RetrieveAPIView):
     permission_classes = [IsOwner]
 
 
-class SubdivisionUpdateAPIView(generics.UpdateAPIView):
+class SubdivisionUpdateAPIView(CacheInvalidationMixin, generics.UpdateAPIView):
     serializer_class = SubdivisionSerializer
     queryset = Subdivision.objects.all()
     permission_classes = [IsOwner]
+    cache_namespace = 'subdivision'
 
 
-class SubdivisionDestroyAPIView(generics.DestroyAPIView):
+class SubdivisionDestroyAPIView(CacheInvalidationMixin, generics.DestroyAPIView):
     serializer_class = SubdivisionSerializer
     queryset = Subdivision.objects.all()
     permission_classes = [IsOwner]
+    cache_namespace = 'subdivision'
 
 
 """CRUD Brigade"""
-class BrigadeListAPIView(generics.ListAPIView, AuthorQuerySetMixin):
+class BrigadeListAPIView(CachedListAPIViewMixin, AuthorQuerySetMixin, generics.ListAPIView):
     serializer_class = BrigadeSerializer
     queryset = Brigade.objects.all()
+    cache_namespace = 'brigade'
 
 
-class BrigadeCreateAPIView(generics.CreateAPIView):
+class BrigadeCreateAPIView(CacheInvalidationMixin, generics.CreateAPIView):
     serializer_class = BrigadeSerializer
     queryset = Brigade.objects.all()
+    cache_namespace = 'brigade'
 
 
 class BrigadeRetrieveAPIView(generics.RetrieveAPIView):
@@ -53,27 +59,31 @@ class BrigadeRetrieveAPIView(generics.RetrieveAPIView):
     permission_classes = [IsOwner]
 
 
-class BrigadeUpdateAPIView(generics.UpdateAPIView):
+class BrigadeUpdateAPIView(CacheInvalidationMixin, generics.UpdateAPIView):
     serializer_class = BrigadeSerializer
     queryset = Brigade.objects.all()
     permission_classes = [IsOwner]
+    cache_namespace = 'brigade'
 
 
-class BrigadeDestroyAPIView(generics.DestroyAPIView):
+class BrigadeDestroyAPIView(CacheInvalidationMixin, generics.DestroyAPIView):
     serializer_class = BrigadeSerializer
     queryset = Brigade.objects.all()
     permission_classes = [IsOwner]
+    cache_namespace = 'brigade'
 
 
 """CRUD Territory"""
-class TerritoryListAPIView(generics.ListAPIView, AuthorQuerySetMixin):
+class TerritoryListAPIView(CachedListAPIViewMixin, AuthorQuerySetMixin, generics.ListAPIView):
     serializer_class = TerritorySerializer
     queryset = Territory.objects.all()
+    cache_namespace = 'territory'
 
 
-class TerritoryCreateAPIView(generics.CreateAPIView):
+class TerritoryCreateAPIView(CacheInvalidationMixin, generics.CreateAPIView):
     serializer_class = TerritorySerializer
     queryset = Territory.objects.all()
+    cache_namespace = 'territory'
 
 
 class TerritoryRetrieveAPIView(generics.RetrieveAPIView):
@@ -82,27 +92,31 @@ class TerritoryRetrieveAPIView(generics.RetrieveAPIView):
     permission_classes = [IsOwner]
 
 
-class TerritoryUpdateAPIView(generics.UpdateAPIView):
+class TerritoryUpdateAPIView(CacheInvalidationMixin, generics.UpdateAPIView):
     serializer_class = TerritorySerializer
     queryset = Territory.objects.all()
     permission_classes = [IsOwner]
+    cache_namespace = 'territory'
 
 
-class TerritoryDestroyAPIView(generics.DestroyAPIView):
+class TerritoryDestroyAPIView(CacheInvalidationMixin, generics.DestroyAPIView):
     serializer_class = TerritorySerializer
     queryset = Territory.objects.all()
     permission_classes = [IsOwner]
+    cache_namespace = 'territory'
 
 
 """CRUD BrigadeTerritoryAssignment"""
-class BrigadeTerritoryAssignmentListAPIView(generics.ListAPIView, AuthorQuerySetMixin):
+class BrigadeTerritoryAssignmentListAPIView(CachedListAPIViewMixin, AuthorQuerySetMixin, generics.ListAPIView):
     serializer_class = BrigadeTerritoryAssignmentSerializer
     queryset = BrigadeTerritoryAssignment.objects.all()
+    cache_namespace = 'bta'
 
 
-class BrigadeTerritoryAssignmentCreateAPIView(generics.CreateAPIView):
+class BrigadeTerritoryAssignmentCreateAPIView(CacheInvalidationMixin, generics.CreateAPIView):
     serializer_class = BrigadeTerritoryAssignmentSerializer
     queryset = BrigadeTerritoryAssignment.objects.all()
+    cache_namespace = 'bta'
 
 
 class BrigadeTerritoryAssignmentRetrieveAPIView(generics.RetrieveAPIView):
@@ -111,27 +125,31 @@ class BrigadeTerritoryAssignmentRetrieveAPIView(generics.RetrieveAPIView):
     permission_classes = [IsOwner]
 
 
-class BrigadeTerritoryAssignmentUpdateAPIView(generics.UpdateAPIView):
+class BrigadeTerritoryAssignmentUpdateAPIView(CacheInvalidationMixin, generics.UpdateAPIView):
     serializer_class = BrigadeTerritoryAssignmentSerializer
     queryset = BrigadeTerritoryAssignment.objects.all()
     permission_classes = [IsOwner]
+    cache_namespace = 'bta'
 
 
-class BrigadeTerritoryAssignmentDestroyAPIView(generics.DestroyAPIView):
+class BrigadeTerritoryAssignmentDestroyAPIView(CacheInvalidationMixin, generics.DestroyAPIView):
     serializer_class = BrigadeTerritoryAssignmentSerializer
     queryset = BrigadeTerritoryAssignment.objects.all()
     permission_classes = [IsOwner]
+    cache_namespace = 'bta'
 
 
 """CRUD Position"""
-class PositionListAPIView(generics.ListAPIView, AuthorQuerySetMixin):
+class PositionListAPIView(CachedListAPIViewMixin, AuthorQuerySetMixin, generics.ListAPIView):
     serializer_class = PositionSerializer
     queryset = Position.objects.all()
+    cache_namespace = 'position'
 
 
-class PositionCreateAPIView(generics.CreateAPIView):
+class PositionCreateAPIView(CacheInvalidationMixin, generics.CreateAPIView):
     serializer_class = PositionSerializer
     queryset = Position.objects.all()
+    cache_namespace = 'position'
 
 
 class PositionRetrieveAPIView(generics.RetrieveAPIView):
@@ -140,27 +158,31 @@ class PositionRetrieveAPIView(generics.RetrieveAPIView):
     permission_classes = [IsOwner]
 
 
-class PositionUpdateAPIView(generics.UpdateAPIView):
+class PositionUpdateAPIView(CacheInvalidationMixin, generics.UpdateAPIView):
     serializer_class = PositionSerializer
     queryset = Position.objects.all()
     permission_classes = [IsOwner]
+    cache_namespace = 'position'
 
 
-class PositionDestroyAPIView(generics.DestroyAPIView):
+class PositionDestroyAPIView(CacheInvalidationMixin, generics.DestroyAPIView):
     serializer_class = PositionSerializer
     queryset = Position.objects.all()
     permission_classes = [IsOwner]
+    cache_namespace = 'position'
 
 
 """CRUD Manometer"""
-class ManometerListAPIView(generics.ListAPIView, AuthorQuerySetMixin):
+class ManometerListAPIView(CachedListAPIViewMixin, AuthorQuerySetMixin, generics.ListAPIView):
     serializer_class = ManometerSerializer
     queryset = Manometer.objects.all()
+    cache_namespace = 'manometer'
 
 
-class ManometerCreateAPIView(generics.CreateAPIView):
+class ManometerCreateAPIView(CacheInvalidationMixin, generics.CreateAPIView):
     serializer_class = ManometerSerializer
     queryset = Manometer.objects.all()
+    cache_namespace = 'manometer'
 
 
 class ManometerRetrieveAPIView(generics.RetrieveAPIView):
@@ -169,27 +191,31 @@ class ManometerRetrieveAPIView(generics.RetrieveAPIView):
     permission_classes = [IsOwner]
 
 
-class ManometerUpdateAPIView(generics.UpdateAPIView):
+class ManometerUpdateAPIView(CacheInvalidationMixin, generics.UpdateAPIView):
     serializer_class = ManometerSerializer
     queryset = Manometer.objects.all()
     permission_classes = [IsOwner]
+    cache_namespace = 'manometer'
 
 
-class ManometerDestroyAPIView(generics.DestroyAPIView):
+class ManometerDestroyAPIView(CacheInvalidationMixin, generics.DestroyAPIView):
     serializer_class = ManometerSerializer
     queryset = Manometer.objects.all()
     permission_classes = [IsOwner]
+    cache_namespace = 'manometer'
 
 
 """CRUD Thermometer"""
-class ThermometerListAPIView(generics.ListAPIView, AuthorQuerySetMixin):
+class ThermometerListAPIView(CachedListAPIViewMixin, AuthorQuerySetMixin, generics.ListAPIView):
     serializer_class = ThermometerSerializer
     queryset = Thermometer.objects.all()
+    cache_namespace = 'thermometer'
 
 
-class ThermometerCreateAPIView(generics.CreateAPIView):
+class ThermometerCreateAPIView(CacheInvalidationMixin, generics.CreateAPIView):
     serializer_class = ThermometerSerializer
     queryset = Thermometer.objects.all()
+    cache_namespace = 'thermometer'
 
 
 class ThermometerRetrieveAPIView(generics.RetrieveAPIView):
@@ -198,13 +224,15 @@ class ThermometerRetrieveAPIView(generics.RetrieveAPIView):
     permission_classes = [IsOwner]
 
 
-class ThermometerUpdateAPIView(generics.UpdateAPIView):
+class ThermometerUpdateAPIView(CacheInvalidationMixin, generics.UpdateAPIView):
     serializer_class = ThermometerSerializer
     queryset = Thermometer.objects.all()
     permission_classes = [IsOwner]
+    cache_namespace = 'thermometer'
 
 
-class ThermometerDestroyAPIView(generics.DestroyAPIView):
+class ThermometerDestroyAPIView(CacheInvalidationMixin, generics.DestroyAPIView):
     serializer_class = ThermometerSerializer
     queryset = Thermometer.objects.all()
     permission_classes = [IsOwner]
+    cache_namespace = 'thermometer'

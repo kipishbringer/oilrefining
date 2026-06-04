@@ -31,6 +31,7 @@ class SubdivisionUpdateAPIView(generics.UpdateAPIView):
 
 
 class SubdivisionDestroyAPIView(generics.DestroyAPIView):
+    serializer_class = SubdivisionSerializer
     queryset = Subdivision.objects.all()
     permission_classes = [IsOwner]
 
@@ -59,6 +60,7 @@ class BrigadeUpdateAPIView(generics.UpdateAPIView):
 
 
 class BrigadeDestroyAPIView(generics.DestroyAPIView):
+    serializer_class = BrigadeSerializer
     queryset = Brigade.objects.all()
     permission_classes = [IsOwner]
 
@@ -87,6 +89,7 @@ class TerritoryUpdateAPIView(generics.UpdateAPIView):
 
 
 class TerritoryDestroyAPIView(generics.DestroyAPIView):
+    serializer_class = TerritorySerializer
     queryset = Territory.objects.all()
     permission_classes = [IsOwner]
 
@@ -115,6 +118,7 @@ class BrigadeTerritoryAssignmentUpdateAPIView(generics.UpdateAPIView):
 
 
 class BrigadeTerritoryAssignmentDestroyAPIView(generics.DestroyAPIView):
+    serializer_class = BrigadeTerritoryAssignmentSerializer
     queryset = BrigadeTerritoryAssignment.objects.all()
     permission_classes = [IsOwner]
 
@@ -143,6 +147,7 @@ class PositionUpdateAPIView(generics.UpdateAPIView):
 
 
 class PositionDestroyAPIView(generics.DestroyAPIView):
+    serializer_class = PositionSerializer
     queryset = Position.objects.all()
     permission_classes = [IsOwner]
 
@@ -171,6 +176,7 @@ class ManometerUpdateAPIView(generics.UpdateAPIView):
 
 
 class ManometerDestroyAPIView(generics.DestroyAPIView):
+    serializer_class = ManometerSerializer
     queryset = Manometer.objects.all()
     permission_classes = [IsOwner]
 
@@ -199,5 +205,6 @@ class ThermometerUpdateAPIView(generics.UpdateAPIView):
 
 
 class ThermometerDestroyAPIView(generics.DestroyAPIView):
+    serializer_class = ThermometerSerializer
     queryset = Thermometer.objects.all()
     permission_classes = [IsOwner]
